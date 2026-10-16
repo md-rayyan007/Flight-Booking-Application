@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Flight</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="datetime-local"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            grid-column: span 2;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('admin.add_flight_view') }}">
+        <h2>Add Flight</h2>
+        <div class="form-grid">
+            <div>
+                <label for="flight_id">Flight ID:</label>
+                <input type="number" id="flight_id" name="flight_id" required>
+            </div>
+            <div>
+                <label for="arrival">Arrival Time:</label>
+                <input type="datetime-local" id="arrival" name="arrival" required>
+            </div>
+            <div>
+                <label for="departure">Departure Time:</label>
+                <input type="datetime-local" id="departure" name="departure" required>
+            </div>
+            <div>
+                <label for="destination">Destination:</label>
+                <input type="text" id="destination" name="destination" required>
+            </div>
+            <div>
+                <label for="source">Source:</label>
+                <input type="text" id="source" name="source" required>
+            </div>
+            <div>
+                <label for="airline">Airline:</label>
+                <input type="text" id="airline" name="airline" required>
+            </div>
+            <div>
+                <label for="seats">Seats:</label>
+                <input type="number" id="seats" name="seats" required>
+            </div>
+            <div>
+                <label for="duration">Duration (hours):</label>
+                <input type="number" id="duration" name="duration" step="0.01" required>
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+            <div>
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status" required>
+            </div>
+            <div>
+                <label for="issue">Issue (optional):</label>
+                <input type="text" id="issue" name="issue">
+            </div>
+            <div>
+                <label for="last_seat">Last Seat:</label>
+                <input type="number" id="last_seat" name="last_seat" required>
+            </div>
+            <div>
+                <label for="bus_seats">Business Seats:</label>
+                <input type="number" id="bus_seats" name="bus_seats" required>
+            </div>
+            <div>
+                <label for="last_bus_seat">Last Business Seat:</label>
+                <input type="number" id="last_bus_seat" name="last_bus_seat" required>
+            </div>
+            <div>
+                <label for="admin_id">Admin ID:</label>
+                <input type="number" id="admin_id" name="admin_id" required>
+            </div>
+            <div>
+                <label for="airline_id">Airline ID:</label>
+                <input type="number" id="airline_id" name="airline_id" required>
+            </div>
+            <div>
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+        </div>
+        <button type="submit">Add Flight</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Staff to Flight</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        select,
+        button,
+        a {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        select:focus,
+        button:focus,
+        a:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: #333;
+            background: #f4f4f4;
+            border: 1px solid #ccc;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        a:hover {
+            background: #eaeaea;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('admin.assign_staff_view', flight_id=flight_id) }}">
+        <h2>Assign Staff to Flight</h2>
+        
+        <label for="staff_id">Select Staff:</label>
+        <select id="staff_id" name="staff_id" required>
+            <option value="">-- Select Staff --</option>
+            {% for staff in staff_list %}
+            <option value="{{ staff['staff_id'] }}">{{ staff['name'] }} ({{ staff['position'] }})</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit">Assign</button>
+        <a href="{{ url_for('admin.admin_dashboard') }}">Cancel</a>
+    </form>
+</body>
+</html>

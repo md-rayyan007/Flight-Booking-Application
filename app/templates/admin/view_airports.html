@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Airports</title>
+</head>
+<body>
+    <h2>All Airports</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Airport ID</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for airport in airports %}
+            <tr>
+                <td>{{ airport['airport_id'] }}</td>
+                <td>{{ airport['airport_name'] }}</td>
+                <td>{{ airport['city'] }}</td>
+                <td>{{ airport['country'] }}</td>
+                <td>{{ airport['code'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add City</title>
+</head>
+<body>
+    <h2>Add City</h2>
+    <form method="POST" action="{{ url_for('admin.add_city_view') }}">
+        <label for="city">City Name:</label>
+        <input type="text" id="city" name="city" required>
+        <br>
+        <button type="submit">Add City</button>
+    </form>
+</body>
+</html>

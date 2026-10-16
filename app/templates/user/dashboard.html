@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 16px;
+        }
+
+        .header a {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .header a:hover {
+            background-color: #5a6268;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .button-group a {
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .button-group a:hover {
+            background-color: #0056b3;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .options a {
+            text-decoration: none;
+            background-color: #17a2b8;
+            color: white;
+            padding: 15px 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .options a:hover {
+            background-color: #138496;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .discount {
+            color: green;
+            font-weight: bold;
+        }
+
+        .not-eligible {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .actions a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        .actions button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .actions button:hover {
+            background-color: #c82333;
+        }
+
+        .options {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        
+        .options a {
+            text-decoration: none;
+            background-color: #17a2b8;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            min-width: 200px; /* Optional: Consistent width for buttons */
+        }
+        
+        .options a:hover {
+            background-color: #138496;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+
+    <!-- Header -->
+    <div class="header">
+        <p>Welcome, <strong>{{ session['user_name'] }}</strong></p>
+        <a href="{{ url_for('user.logout_user') }}">Logout</a>
+    </div>
+
+    <!-- Button Group -->
+    <div class="button-group">
+        <a href="{{ url_for('user.book_flight_view') }}">Book a Flight</a>
+        <a href="{{ url_for('user.change_password') }}">Change Password</a>
+        <a href="{{ url_for('user.profile') }}">Update Profile</a>
+    </div>
+
+    <!-- Display Loyalty Points -->
+    <div class="options" align='center'>
+        {% if loyalty %}
+        <a>Loyalty Points: <strong>{{ loyalty.points }}</strong></a>
+        <a>Tier Level: <strong>{{ loyalty.tier_level }}</strong></a>
+        {% else %}
+        <a>No Loyalty Data Available</a>
+        {% endif %}
+    </div>
+
+    <!-- Booked Flights Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Flight</th>
+                <th>Original Price</th>
+                <th>Discounted Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if flights %}
+                {% for flight in flights %}
+                <tr>
+                    <td>{{ flight.source }} to {{ flight.destination }}</td>
+                    <td>${{ flight.BookedPrice }}</td>
+                    <td>
+                        {% if flight.DiscountedPrice is not none and flight.DiscountedPrice < flight.BookedPrice %}
+                        <span class="discount">${{ flight.DiscountedPrice }}</span>
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                    <td class="actions">
+                        {% if loyalty and loyalty.points >= 100 and (flight.DiscountedPrice is none or flight.DiscountedPrice == flight.BookedPrice) %}
+                        <a href="{{ url_for('user.apply_discount_view', booking_id=flight.ticket_id) }}">Apply Discount</a>
+                        {% else %}
+                        <span class="not-eligible">Not eligible for discount</span>
+                        {% endif %}
+                        |  
+                        <a href="{{ url_for('user.cancel_flight', booking_id=flight.ticket_id, flight_id=flight.flight_id) }}">Cancel Flight</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">No flights booked yet.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# install python libraries
+# install my sql connector using below command
+# pip install mysql-connector-python 
+# Open terminal in VS code
+# go to path cd C:\Users\vishn\OneDrive\Documents\OnlineFlightBookingApp\flight_booking_system
+# run command python run.py
+# open http://127.0.0.1:5000/ in browser which will show the landing page.

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Airlines</title>
+</head>
+<body>
+    <h2>All Airlines</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Airline ID</th>
+                <th>Name</th>
+                <th>Seats</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for airline in airlines %}
+            <tr>
+                <td>{{ airline['airline_id'] }}</td>
+                <td>{{ airline['name'] }}</td>
+                <td>{{ airline['seats'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
